@@ -9,41 +9,52 @@
 import UIKit
 
 class TableViewController: UITableViewController {
-
     
+    // table
     @IBOutlet var documentsTableView: UITableView!
+    
+    // products
+    var productCollection: ProductCollection!
+    var productsForTableView: [Product]!
+    
+    // JSON file
+    let jsonFileName = "inventory"
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        if let productSet = ProductLoader.load(jsonFileName: jsonFileName) {
+            productsForTableView = productSet
+        }
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return productCollection.products.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "productCell", for: indexPath)
+        let product = productsForTableView[indexPath.row]
+        
+        if let cell = cell as? TableViewCell {
+            cell.titleLabel.text = product.title
+            cell.priceLabel.text = String(product.price)
+            cell.stockedQuantityLabel.text = "Stocked quantity: \(product.stockedQuantity)"
+            cell.categoryLabel.text = product.category
+        }
+        
         return cell
     }
-    */
+ 
 
     /*
     // Override to support conditional editing of the table view.

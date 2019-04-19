@@ -10,7 +10,7 @@ import Foundation
 
 class ProductLoader {
     class func load(jsonFileName: String) -> [Product]? {
-        var collection = ProductCollection?()
+        var collection: ProductCollection?
         let jsonDecoder = JSONDecoder()
         
         if let jsonURL = Bundle.main.url(forResource: jsonFileName, withExtension: ".json"), let jsonData = try? Data(contentsOf: jsonURL) {
