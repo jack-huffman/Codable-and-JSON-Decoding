@@ -15,7 +15,9 @@ class ProductLoader {
         
         if let jsonURL = Bundle.main.url(forResource: jsonFileName, withExtension: ".json"), let jsonData = try? Data(contentsOf: jsonURL) {
             
-           collection.products  = try? jsonDecoder.decode(ProductCollection, from: jsonData)
+            collection?  = try! jsonDecoder.decode(ProductCollection.self, from: jsonData)
+            return collection?.products
         }
     }
+    return nil
 }
